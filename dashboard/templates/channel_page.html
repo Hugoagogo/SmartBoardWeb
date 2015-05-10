@@ -21,7 +21,7 @@
               title: 'Time'
             },
             vAxis: {
-              title: 'Popularity'
+              title: 'Power'
             },
             backgroundColor: '#00FFFFFF'
           };
@@ -31,6 +31,7 @@
         }
     </script>
     
-    <H1>{{ channel.name }} - {{ channel.points.count }} points</H1>
+    <h2>{{ channel.name }} - {{ channel.points.count }} points</h2>
+    <a href="{% url 'log_random' channel.id %}">Add Random Datapoint</a>
     <div id="chart_div" height="50%", width="80%"><div>
 {% endblock content %}

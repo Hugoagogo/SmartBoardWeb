@@ -8,6 +8,7 @@
                 <td><a href="{% url 'channel' channel.id %}">{{ channel.name }}</a></td>
                 <td>{{ channel.board }}</td>
                 <td>{{ channel.points.count }}</td>
+                <td><a href="{% url 'log_random' channel.id %}">Add Random Datapoint</a></td>
             </tr>
         {% endfor %}
     </table>
