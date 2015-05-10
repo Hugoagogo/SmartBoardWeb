@@ -1,5 +1,7 @@
 from django.db import models
 
+#Defines the database setup
+
 class SmartBoard(models.Model):
 	name = models.CharField(max_length=50)
 	

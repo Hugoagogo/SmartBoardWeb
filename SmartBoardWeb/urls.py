@@ -18,9 +18,9 @@ from django.contrib import admin
 
 
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', include(admin.site.urls)), # Passes all requests starting with /admin/ through to the admin "app"
     
-    url(r'^report/', include('nodecomms.urls')),
+    url(r'^report/', include('nodecomms.urls')), #Passes all requests starting with /report/ through to the "nodecomms" app
     
-    url(r'^', include('dashboard.urls')),
+    url(r'^', include('dashboard.urls')), #Pass the rest through to the dashboard app
 ]

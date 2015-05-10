@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 import random
 
-# Create your views here.
+
 def log_data(request,channel,reading):
     channel = get_object_or_404(Channel,pk=channel)
     pt = PowerReading(channel=channel, value=reading)
