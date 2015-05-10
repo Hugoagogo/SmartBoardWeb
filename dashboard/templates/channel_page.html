@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        google.load('visualization', '1', {packages: ['corechart', 'line']});
+    google.setOnLoadCallback(drawBackgroundColor);
+    
+    function drawBackgroundColor() {
+          var data = new google.visualization.DataTable();
+          data.addColumn('datetime', 'X');
+          data.addColumn('number', 'Power');
+    
+          data.addRows([
+            {% for point in channel.points.all %}
+                [new Date("{{ point.datetime.isoformat }}"),{{ point.value }}],
+            {% endfor %}
+          ]);
+          var options = {
+            hAxis: {
+              title: 'Time'
+            },
+            vAxis: {
+              title: 'Popularity'
+            },
+            backgroundColor: '#00FFFFFF'
+          };
+    
+          var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+          chart.draw(data, options);
+        }
+    </script>
+    
+    <H1>{{ channel.name }} - {{ channel.points.count }} points</H1>
+    <div id="chart_div" height="50%", width="80%"><div>
+{% endblock content %}

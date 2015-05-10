@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <table style="width:100%" border="1">
+        <tr><th>Board</th><th>Channel</th><th>Datapoints Captured</th></tr>
+        {% for channel in channels %}
+            <tr>
+                <td><a href="{% url 'channel' channel.id %}">{{ channel.name }}</a></td>
+                <td>{{ channel.board }}</td>
+                <td>{{ channel.points.count }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <a href="{% url 'admin:index' %}">Admin</a>
+{% endblock content %}
