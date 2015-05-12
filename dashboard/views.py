@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 
-from models import Channel
+from .models import Channel
 
 def index(request):
     channels = Channel.objects.all()
