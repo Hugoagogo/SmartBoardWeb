@@ -4,16 +4,15 @@ from django.db import models
 
 class SmartBoard(models.Model):
 	name = models.CharField(max_length=50)
-	
-	def __unicode__(self):
+	def __str__(self):
 		return self.name
 	
 class Channel(models.Model):
 	board = models.ForeignKey(SmartBoard)
 	channel_num = models.IntegerField()
-	name = models.CharField(max_length="50")
+	name = models.CharField(max_length=50)
 	
-	def __unicode__(self):
+	def __str__(self):
 		return self.name
 	
 class PowerReading(models.Model):
