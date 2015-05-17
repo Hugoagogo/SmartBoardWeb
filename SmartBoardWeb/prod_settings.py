@@ -1,3 +1,5 @@
+import os
+
 from .settings import *
 
 DATABASES = {
@@ -10,3 +12,5 @@ DATABASES = {
             'PORT': '',                      # Set to empty string for default.
         }
     }
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
