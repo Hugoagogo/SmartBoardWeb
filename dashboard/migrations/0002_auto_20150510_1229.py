@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='channel',
             name='name',
-            field=models.CharField(default='DummyName', max_length=b'50'),
+            field=models.CharField(default='DummyName', max_length=50),
             preserve_default=False,
         ),
         migrations.AlterField(
