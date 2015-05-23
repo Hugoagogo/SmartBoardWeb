@@ -8,7 +8,7 @@ class SmartBoard(models.Model):
 		return self.name
 	
 class Channel(models.Model):
-	board = models.ForeignKey(SmartBoard)
+	board = models.ForeignKey(SmartBoard,related_name = "channels")
 	channel_num = models.IntegerField()
 	name = models.CharField(max_length=50)
 	
