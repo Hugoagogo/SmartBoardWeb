@@ -15,7 +15,7 @@
           title: 'Time'
         },
         vAxis: {
-          title: 'Power'
+          title: '{{ channel.units }}'
         },
         backgroundColor: '#00FFFFFF'
       };
@@ -25,7 +25,7 @@
         data = new google.visualization.DataTable();
         
         data.addColumn('datetime', 'X');
-        data.addColumn('number', 'Power');
+        data.addColumn('number', '{{ channel.units }}');
         
         /*
         data.addRows([
