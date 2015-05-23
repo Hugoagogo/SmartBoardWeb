@@ -1,37 +1,67 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block header %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
-        google.load('visualization', '1', {packages: ['corechart', 'line']});
-    google.setOnLoadCallback(drawBackgroundColor);
     
-    function drawBackgroundColor() {
-          var data = new google.visualization.DataTable();
-          data.addColumn('datetime', 'X');
-          data.addColumn('number', 'Power');
+    google.load('visualization', '1', {packages: ['corechart', 'line']});
+    google.setOnLoadCallback(doSetup);
+    var data;
+    var chart;
     
-          data.addRows([
-            {% for point in channel.points.all %}
-                [new Date("{{ point.datetime.isoformat }}"),{{ point.value }}],
-            {% endfor %}
-          ]);
-          var options = {
-            hAxis: {
-              title: 'Time'
-            },
-            vAxis: {
-              title: 'Power'
-            },
-            backgroundColor: '#00FFFFFF'
-          };
+    var options = {
+        hAxis: {
+          title: 'Time'
+        },
+        vAxis: {
+          title: 'Power'
+        },
+        backgroundColor: '#00FFFFFF'
+      };
     
-          var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-          chart.draw(data, options);
+    function doSetup() {
+        
+        data = new google.visualization.DataTable();
+        
+        data.addColumn('datetime', 'X');
+        data.addColumn('number', 'Power');
+        
+        /*
+        data.addRows([
+          {% for point in channel.points.all %}
+              [new Date("{{ point.datetime.isoformat }}"),{{ point.value }}],
+          {% endfor %}
+        ]);
+        */
+        
+        chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+        get_new_data();
         }
+        
+    function get_new_data(){
+        var address = "{% url 'channel_data' channel.id %}";
+        if (data.getNumberOfRows() > 0) {
+            address += Math.ceil(data.getValue(data.getNumberOfRows()-1,0).getTime()/1000) + "/";
+        }
+        var jsonData = $.ajax({
+          url: address,
+          dataType: 'json'
+        }).done(function (results) {
+            for (var i = 0; i < results.length; i++){
+                data.addRow([new Date(results[i][0]),results[i][1]]);
+            }
+            chart.draw(data, options);
+            setTimeout(get_new_data,3000);
+        })
+    }
     </script>
-    
+{% endblock header %}
+
+{% block content %}
     <h2>{{ channel.name }} - {{ channel.points.count }} points</h2>
+    <h2><a href="data/{{ channel.points.all.reverse.0.id }}/">{{ channel.points.all.reverse.0.datetime }}</a></h2>
     <a href="{% url 'log_random' channel.id %}">Add Random Datapoint</a>
-    <div id="chart_div" height="50%", width="80%"><div>
+    <div id="chart_div" height="50%", width="80%" />
 {% endblock content %}
