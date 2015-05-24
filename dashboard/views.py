@@ -19,7 +19,7 @@ def channel_page(request,channel):
 
 def channel_data(request,channel,timestamp=None):
     channel = get_object_or_404(Channel,pk=channel)
-    readings = channel.points.all()
+    readings = channel.points.all().order_by("datetime")
     if timestamp != None:
         dtime = datetime.datetime.fromtimestamp(float(timestamp))
         readings = readings.filter(channel=channel,datetime__gt=dtime)

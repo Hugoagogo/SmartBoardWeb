@@ -52,6 +52,7 @@
             for (var i = 0; i < results.length; i++){
                 data.addRow([new Date(results[i][0]),results[i][1]]);
             }
+            $('#latest-point').html(data.getValue(data.getNumberOfRows()-1,0));
             chart.draw(data, options);
             setTimeout(get_new_data,3000);
         })
@@ -61,7 +62,6 @@
 
 {% block content %}
     <h2>{{ channel.name }} - {{ channel.points.count }} points</h2>
-    <h2><a href="data/{{ channel.points.all.reverse.0.id }}/">{{ channel.points.all.reverse.0.datetime }}</a></h2>
-    <a href="{% url 'log_random' channel.id %}">Add Random Datapoint</a>
+    <h3>Latest Point at: <b id="latest-point"/></h2>
     <div id="chart_div" height="50%", width="80%" />
 {% endblock content %}
