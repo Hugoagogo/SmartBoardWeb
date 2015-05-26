@@ -23,4 +23,4 @@ def channel_data(request,channel,timestamp=None):
     if timestamp != None:
         dtime = datetime.datetime.utcfromtimestamp(int(timestamp))
         readings = readings.filter(channel=channel,datetime__gt=dtime)
-    return HttpResponse(json.dumps([(int(time.mktime(reading.datetime.timetuple())),reading.value) for reading in readings]))
+    return HttpResponse(json.dumps([(int(time.mktime(dt.timetuple())),v) for dt, v in readings.values_list("datetime","value")]))
