@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 
 import json
-import datetime
+import datetime, time
 
 from .models import Channel
 
@@ -21,6 +21,6 @@ def channel_data(request,channel,timestamp=None):
     channel = get_object_or_404(Channel,pk=channel)
     readings = channel.points.all().order_by("datetime")
     if timestamp != None:
-        dtime = datetime.datetime.fromtimestamp(float(timestamp))
+        dtime = datetime.datetime.utcfromtimestamp(int(timestamp))
         readings = readings.filter(channel=channel,datetime__gt=dtime)
-    return HttpResponse(json.dumps([(reading.datetime.isoformat(),reading.value) for reading in readings]))
+    return HttpResponse(json.dumps([(int(time.mktime(reading.datetime.timetuple())),reading.value) for reading in readings]))
