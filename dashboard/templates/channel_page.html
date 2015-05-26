@@ -1,70 +1,53 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 
 {% block header %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript">
-    
-    google.load('visualization', '1', {packages: ['corechart', 'line']});
-    google.setOnLoadCallback(doSetup);
-    var data;
-    var chart;
-    
-    var options = {
-        hAxis: {
-          title: 'Time'
-        },
-        vAxis: {
-          title: '{{ channel.units }}'
-        },
-        backgroundColor: '#00FFFFFF'
-      };
-    
-    function doSetup() {
-        
-        data = new google.visualization.DataTable();
-        
-        data.addColumn('datetime', 'X');
-        data.addColumn('number', '{{ channel.units }}');
-        
-        /*
-        data.addRows([
-          {% for point in channel.points.all %}
-              [new Date("{{ point.datetime.isoformat }}"),{{ point.value }}],
-          {% endfor %}
-        ]);
-        */
-        
-        chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
-        get_new_data();
-        }
-        
-    function get_new_data(){
-        var address = "{% url 'channel_data' channel.id %}";
-        if (data.getNumberOfRows() > 0) {
-            address += Math.ceil(data.getValue(data.getNumberOfRows()-1,0).getTime()/1000) + "/";
-        }
-        var jsonData = $.ajax({
-          url: address,
-          dataType: 'json'
-        }).done(function (results) {
-            for (var i = 0; i < results.length; i++){
-                data.addRow([new Date(results[i][0]),results[i][1]]);
-            }
-            if (results.length) {
-                $('#latest-point').html(data.getValue(data.getNumberOfRows()-1,0));
-                $('#latest-point').fadeTo('slow', 0.25).fadeTo('slow', 1.0);
-            }
-            chart.draw(data, options);
-            setTimeout(get_new_data,2000);
-        })
-    }
-    </script>
+    <!--[if IE]>
+    <script type="text/javascript" src="{% static "dashboard/js/excanvas.js" %}" />
+    <![endif]-->
+    <script type="text/javascript" src="{% static "dashboard/js/dygraph-combined.js" %}"></script>
+    <script type="text/javascript" src="{% static "dashboard/js/jquery.min.js" %}"></script>
 {% endblock header %}
 
 {% block content %}
     <h2>{{ channel.name }} - {{ channel.points.count }} points</h2>
-    <h3>Latest Point at: <b id="latest-point"/></h2>
-    <div id="chart_div" height="50%", width="80%" />
+    <h3>Latest Point at: <b id="latest-point"></b></h2>
+    <div id="chart_div" style="height:60%; width:80%; margin:auto" />
+    
+    <script type="text/javascript">
+        function get_new_data(){
+            var address = "{% url 'channel_data' channel.id %}";
+            if (data.length > 0) {
+                address += Math.ceil(data[data.length-1][0].getTime()/1000) + "/";
+            }
+            var jsonData = $.ajax({
+              url: address,
+              dataType: 'json'
+            }).done(function (results) {
+                for (var i = 0; i < results.length; i++){
+                    data.push([new Date(results[i][0]),results[i][1]]);
+                }
+                if (results.length) {
+                    $('#latest-point').fadeTo('slow', 0.25);
+                    $('#latest-point').html(data[data.length-1][0]);
+                    $('#latest-point').fadeTo('slow', 1.0);
+                    g.updateOptions( { 'file': data } );
+                }
+                setTimeout(get_new_data,2000);
+            })
+        }
+        
+        var data = [];
+        
+        var g = new Dygraph(document.getElementById("chart_div"), data,
+                            {
+                              drawPoints: false,
+                              //valueRange: [0.0, 1.2],
+                              labels: ['Time', '{{ channel.units }}'],
+                              xlabel: 'Time',
+                              ylabel: '{{ channel.units }}',
+                            });
+        
+        get_new_data();
+    </script>
 {% endblock content %}
