@@ -17,12 +17,12 @@ def channel_page(request,channel,timeframe=None):
     channel = get_object_or_404(Channel,pk=channel)
     
     timestamp_start = 0
-    if timeframe != None:
-        timestamp_start = calendar.timegm(datetime.datetime.utcnow().timetuple())
+    #if timeframe != None:
+    #    timestamp_start = calendar.timegm(datetime.datetime.utcnow().timetuple())
     if timeframe == "hour":
-        timestamp_start -= 60*60
+        timestamp_start = 60*60
     elif timeframe == "5minutes":
-        timestamp_start -= 5*60
+        timestamp_start = 5*60
     
     return render(request,"channel_page.html",
                   {"channel":channel,

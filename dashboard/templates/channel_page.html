@@ -19,7 +19,12 @@
             if (data.length > 0) {
                 address = "{% url 'channel_data' channel.id %}" + Math.ceil(data[data.length-1][0].getTime()/1000) + "/";
             } else {
-                address = "{% url 'channel_data' channel.id %}" + {{ timestart }} + "/";
+                if ({{ timestart }}) {
+                    address = "{% url 'channel_data' channel.id %}" + Math.ceil(new Date().getTime()/1000 - {{ timestart }}) + "/";
+                } else {
+                    address = "{% url 'channel_data' channel.id %}";
+                }
+                
             }
             var jsonData = $.ajax({
               url: address,
@@ -28,9 +33,20 @@
                 for (var i = 0; i < results.length; i++){
                     data.push([new Date(results[i][0]*1000),results[i][1]]);
                 }
+                var needs_update = false;
                 if (results.length) {
                     $('#latest-point').html(data[data.length-1][0]);
                     $('#latest-point').fadeTo(0, 0.25).fadeTo(1500, 1.0);
+                    var needs_update = true;
+                }
+                if ({{ timestart }}) {
+                    var d = new Date().getTime();
+                    while (data.length && ((d-data[0][0].getTime())/1000 > {{ timestart }})) {
+                        data.splice(0,1);
+                        needs_update = true;
+                    }
+                }
+                if (needs_update) {
                     g.updateOptions( { 'file': data } );
                 }
                 setTimeout(get_new_data,3000);
