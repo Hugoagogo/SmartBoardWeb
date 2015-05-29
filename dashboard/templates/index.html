@@ -2,10 +2,11 @@
 
 {% block content %}
     <table style="width:100%" border="1">
-        <tr><th>Board</th><th>Channel</th><th>Datapoints Captured</th></tr>
+        <tr><th>Board</th><th>View Data</th><th>Channel</th><th>Datapoints Captured</th></tr>
         {% for channel in channels %}
             <tr>
-                <td><a href="{% url 'channel' channel.id %}">{{ channel.name }}</a></td>
+                <td>{{ channel.name }}</td>
+                <td><a href="{% url 'channel' channel.id %}">All Points</a> - <a href="{% url 'channel' channel.id "hour" %}">Last Hour</a> - <a href="{% url 'channel' channel.id "5minutes" %}">Last 5 Minutes</a></td>
                 <td>{{ channel.board }}</td>
                 <td>{{ channel.points.count }}</td>
             </tr>

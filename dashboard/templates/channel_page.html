@@ -16,9 +16,10 @@
     
     <script type="text/javascript">
         function get_new_data(){
-            var address = "{% url 'channel_data' channel.id %}";
             if (data.length > 0) {
-                address += Math.ceil(data[data.length-1][0].getTime()/1000) + "/";
+                address = "{% url 'channel_data' channel.id %}" + Math.ceil(data[data.length-1][0].getTime()/1000) + "/";
+            } else {
+                address = "{% url 'channel_data' channel.id %}" + {{ timestart }} + "/";
             }
             var jsonData = $.ajax({
               url: address,
@@ -32,7 +33,7 @@
                     $('#latest-point').fadeTo(0, 0.25).fadeTo(1500, 1.0);
                     g.updateOptions( { 'file': data } );
                 }
-                setTimeout(get_new_data,5000);
+                setTimeout(get_new_data,3000);
             })
         }
         

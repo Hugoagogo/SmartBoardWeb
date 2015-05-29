@@ -13,14 +13,25 @@ def index(request):
                   {'channels':channels} #dictionary object that is used for refference in template
                   )
 
-def channel_page(request,channel):
+def channel_page(request,channel,timeframe=None):
     channel = get_object_or_404(Channel,pk=channel)
+    
+    timestamp_start = 0
+    if timeframe != None:
+        timestamp_start = calendar.timegm(datetime.datetime.utcnow().timetuple())
+    if timeframe == "hour":
+        timestamp_start -= 60*60
+    elif timeframe == "5minutes":
+        timestamp_start -= 5*60
+    
     return render(request,"channel_page.html",
-                  {"channel":channel}) #dictionary object that is used for refference in template
+                  {"channel":channel,
+                   "timestart":timestamp_start}) #dictionary object that is used for refference in template
 
 def channel_data(request,channel,timestamp=None):
     channel = get_object_or_404(Channel,pk=channel)
     readings = channel.points.all().order_by("datetime")
+    
     if timestamp != None:
         dtime = datetime.datetime.utcfromtimestamp(int(timestamp)+1) #+1 to allow for fractional seconds stored in db
         dtime = dtime.replace(tzinfo=timezone.utc)
