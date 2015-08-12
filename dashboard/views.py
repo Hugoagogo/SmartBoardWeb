@@ -25,6 +25,8 @@ def channel_page(request,channel,timeframe=None):
         timestamp_start = 5*60
     elif timeframe == "day":
         timestamp_start = 60*60*24
+    elif timeframe == "1000points":
+        timestamp_start = 1000
     
     return render(request,"channel_page.html",
                   {"channel":channel,
@@ -57,3 +59,4 @@ def average_readings(data,period):#Average points spaced more closely than perio
             total_x += timestamp
             total_y += value
             count += 1
+
