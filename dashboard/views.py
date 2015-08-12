@@ -58,5 +58,5 @@ def average_readings(data,period):#Average points spaced more closely than perio
         else:
             total_x += timestamp
             total_y += value
-            count += 1
+            count += 1 
 
