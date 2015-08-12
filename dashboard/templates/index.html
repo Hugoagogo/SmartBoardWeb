@@ -6,7 +6,7 @@
         {% for channel in channels %}
             <tr>
                 <td>{{ channel.name }}</td>
-                <td><a href="{% url 'channel' channel.id %}">All Points</a> - <a href="{% url 'channel' channel.id "day" %}">Last Day</a> - <a href="{% url 'channel' channel.id "hour" %}">Last Hour</a> - <a href="{% url 'channel' channel.id "5minutes" %}">Last 5 Minutes</a></td>
+                <td><a href="{% url 'channel' channel.id %}">All Points</a> - <a href="{% url 'channel' channel.id "1000points" %}">Last 1000 Points</a> - <a href="{% url 'channel' channel.id "day" %}">Last Day</a> - <a href="{% url 'channel' channel.id "hour" %}">Last Hour</a> - <a href="{% url 'channel' channel.id "5minutes" %}">Last 5 Minutes</a></td>
                 <td>{{ channel.board }}</td>
                 <td>{{ channel.points.count }}</td>
             </tr>
