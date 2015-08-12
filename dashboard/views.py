@@ -38,7 +38,17 @@ def channel_data(request,channel,timestamp=None):
         dtime = datetime.datetime.utcfromtimestamp(int(timestamp)+1) #+1 to allow for fractional seconds stored in db
         dtime = dtime.replace(tzinfo=timezone.utc)
         readings = readings.filter(channel=channel,datetime__gte=dtime)
-    data = ((int(calendar.timegm(dt.timetuple())),v) for dt, v in readings.values_list("datetime","value"))
+    
+    readings = readings.values_list("datetime","value")
+    
+    # Convert the readings into something simpler than a query set
+    # Note the use of iterator() and round braces around the expression so it is a generator (lazy evaluation)
+    data = ((int(calendar.timegm(dt.timetuple())),v) for dt, v in readings.iterator())
+    
+    # if we have too many values cut them down to once every 20 seconds max (temprary fix to not being able to display all data on website)
+    if readings.count() > 200000:
+        data = average_readings(data,20)
+    
     return HttpResponse(json.dumps(list(data)))
 
 def average_readings(data,period):#Average points spaced more closely than period, done with a nice generator function (lazy evaluation)
