@@ -46,7 +46,7 @@ def channel_data(request,channel,timestamp=None):
     data = ((int(calendar.timegm(dt.timetuple())),v) for dt, v in readings.iterator())
     
     # if we have too many values cut them down to once every 20 seconds max (temprary fix to not being able to display all data on website)
-    if readings.count() > 200000:
+    if readings.count() > 20000:
         data = average_readings(data,20)
     
     return HttpResponse(json.dumps(list(data)))
