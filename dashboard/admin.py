@@ -32,3 +32,12 @@ class PowerReadingAdmin(admin.ModelAdmin):
     def get_channel_name(self, obj):
         return obj.channel.name
     get_channel_name.short_description = "Channel Name"
+	
+@admin.register(models.SwitchStatus)
+class SwitchStatusAdmin(admin.ModelAdmin):
+    list_display=('get_board_name','datetime','status')
+    list_filter=('board',)
+    
+    def get_board_name(self, obj):
+        return obj.board.name
+    get_board_name.short_description = "Board Name"

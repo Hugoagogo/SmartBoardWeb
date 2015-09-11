@@ -20,3 +20,8 @@ class PowerReading(models.Model):
 	channel = models.ForeignKey(Channel,related_name = "points")
 	value = models.FloatField()
 	datetime = models.DateTimeField(auto_now_add=True)
+	
+class SwitchStatus(models.Model):
+	board = models.ForeignKey(SmartBoard,related_name = "status")
+	status = models.IntegerField()
+	datetime = models.DateTimeField(auto_now_add=True)

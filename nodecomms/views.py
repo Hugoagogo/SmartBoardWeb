@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404
 from dashboard.models import Channel, PowerReading, SmartBoard
 from django.http import HttpResponse, HttpResponseRedirect
 
+import datetime
+
 import random
 
 
@@ -31,3 +33,9 @@ def add_random(request,channel):
     pt.save()
     
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+	
+def get_status(request,board):
+	board = get_object_or_404(SmartBoard, pk=board)
+	status = board.status.filter(datetime__lt=datetime.datetime.now()).order_by("datetime").first()
+	
+	return HttpResponse(status.status)
