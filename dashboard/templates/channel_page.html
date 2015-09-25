@@ -12,9 +12,23 @@
 {% block content %}
     <h2>{{ channel.name }} - {{ channel.points.count }} points</h2>
     <h3>Latest Point at: <b id="latest-point"></b></h2>
+    <h4>Switch Status: {{status.status}}</h4>
+
+    <button id="test_button" onclick="button_press()"> Switch 1 </button>
+
     <div id="chart_div" style="height:60%; width:80%; margin:auto"></div>
     
     <script type="text/javascript">
+
+        function button_press(){
+            var jsonData = $.ajax({
+              url: "{% url 'button_press' channel.id %}",
+              dataType: 'json'
+            }).done(function (results) {
+           document.getElementById("test_button").innerHTML = results;
+        })
+        }
+
         function get_new_data(){
             if (data.length > 0) {
                 address = "{% url 'channel_data' channel.id %}" + Math.ceil(data[data.length-1][0].getTime()/1000) + "/";

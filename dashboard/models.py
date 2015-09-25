@@ -1,9 +1,14 @@
-from django.db import models
+﻿from django.db import models
+
+import datetime
 
 #Defines the database setup
 
 class SmartBoard(models.Model):
 	name = models.CharField(max_length=50)
+
+	def current_status(self):
+		return self.status.filter(datetime__lt=datetime.datetime.utcnow()).order_by("-datetime").first()
 	def __str__(self):
 		return self.name
 	
@@ -12,7 +17,7 @@ class Channel(models.Model):
 	channel_num = models.IntegerField()
 	name = models.CharField(max_length=50)
 	units = models.CharField(max_length=50,default="Power")
-	
+
 	def __str__(self):
 		return self.name
 	

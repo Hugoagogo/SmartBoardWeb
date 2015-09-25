@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+﻿from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils import timezone
 
@@ -25,10 +25,13 @@ def channel_page(request,channel,timeframe=None):
         timestamp_start = 5*60
     elif timeframe == "day":
         timestamp_start = 60*60*24
+
+    status = channel.board.current_status()
     
     return render(request,"channel_page.html",
                   {"channel":channel,
-                   "timestart":timestamp_start}) #dictionary object that is used for refference in template
+                   "timestart":timestamp_start,
+                   "status":status}) #dictionary object that is used for refference in template
 
 def channel_data(request,channel,timestamp=None):
     channel = get_object_or_404(Channel,pk=channel)
