@@ -8,7 +8,7 @@ class SmartBoard(models.Model):
 	name = models.CharField(max_length=50)
 
 	def current_status(self):
-		return self.status.filter(datetime__lt=datetime.datetime.utcnow()).order_by("-datetime").first()
+		return self.status.filter(datetime__lt=datetime.datetime.utcnow()).order_by("datetime").first()
 	def __str__(self):
 		return self.name
 	
