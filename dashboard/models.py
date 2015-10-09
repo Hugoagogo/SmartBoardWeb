@@ -1,6 +1,6 @@
 ﻿from django.db import models
 
-import datetime
+from django.utils import timezone
 
 #Defines the database setup
 
@@ -8,7 +8,7 @@ class SmartBoard(models.Model):
     name = models.CharField(max_length=50)
 
     def current_status(self):
-        stat = self.status.filter(datetime__lt=datetime.datetime.utcnow()).order_by("-datetime")
+        stat = self.status.filter(datetime__lt=timezone.now()).order_by("-datetime")
         if(stat.count() == 0):
             status = SwitchStatus( board = self, status = 0)
             status.save()
