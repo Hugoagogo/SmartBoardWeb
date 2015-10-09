@@ -2,7 +2,7 @@
 
 {% block content %}
     <table style="width:100%" border="1">
-        <tr><th>Board</th><th>View Data</th><th>Channel</th><th>Datapoints Captured</th></tr>
+        <tr><th>Channel</th><th>View Data</th><th>Board</th><th>Datapoints Captured</th></tr>
         {% for channel in channels %}
             <tr>
                 <td>{{ channel.name }}</td>
