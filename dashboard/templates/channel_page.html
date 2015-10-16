@@ -24,6 +24,10 @@
     <div id="chart_div" style="height:60%; width:80%; margin:auto; background-color:lightblue"></div>
     
     <script type="text/javascript">
+        function button_status() {
+            //decode whether button is on/off
+            
+        }
 
         function button_press(){
             var jsonData = $.ajax({
@@ -32,6 +36,17 @@
             }).done(function (results) {
            document.getElementById("test_button").innerHTML = results;
         })
+        }
+
+        function button_poll() {
+            //button polling
+            var jsonData = $.ajax({
+              url: "{% url 'get_status' channel.id %}",
+              dataType: 'json'
+            }).done(function (results) {
+            document.getElementById("test_button").innerHTML = results;
+        });
+            setTimeout(button_poll,3000);
         }
 
         function get_new_data(){
@@ -84,5 +99,6 @@
                             });
         
         get_new_data();
+        button_poll();
     </script>
 {% endblock content %}
