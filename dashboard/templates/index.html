@@ -22,7 +22,6 @@
         </div2>
     </div>
 
-    <footer>
     <table style="width:100%" border="1">
         <tr><th>Channel</th><th>View Data</th><th>Board</th><th>Datapoints Captured</th></tr>
         {% for channel in channels %}
@@ -34,8 +33,4 @@
             </tr>
         {% endfor %}
     </table>
-    <p>
-        <a href="{% url 'admin:index' %}">Admin</a>
-    </p>
-    </footer>
 {% endblock content %}
