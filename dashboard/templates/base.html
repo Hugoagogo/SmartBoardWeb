@@ -1,15 +1,19 @@
 <html>
     <head>
-        <title>Team 5: Smart PowerBoard Demo</title>
+        <style>
+            html {height:"100%"}
+        </style>
+        <title>Switched On</title>
         {% block header %}
         {% endblock header %}
     </head>
     <body>
-        <h1>Team 5: Smart PowerBoard Demo</h1>
-        <a href="{% url 'index' %}">Home</a>
-        <p>
-            Points can also be added by visiting /report/[ChannelID]/Value
-        </p>
+        <center>
+          <a href="{% url 'index' %}">
+            <img src="images/watch.jpg" alt="Logo" height="10%"/>
+          </a>
+        </center>
+
         {% block content %}
         {% endblock content %}
     </body>

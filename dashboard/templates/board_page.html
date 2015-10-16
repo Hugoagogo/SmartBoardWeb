@@ -10,10 +10,7 @@
 {% endblock header %}
 
 {% block content %}
-    <h2>{{ channel.name }} - {{ channel.points.count }} points</h2>
-    <h3>Latest Point at: <b id="latest-point"></b></h3>
-    <h4>Switch Status: {{status.status}}</h4>
-    <h4>Channel num: {{channel.channel_num}}</h4>
+    <h2>Board: {{channel.board}}</h2>
 
     <button id="test_button" onclick="button_press()"> Switch 1 </button>
 

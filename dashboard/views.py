@@ -5,12 +5,14 @@ from django.utils import timezone
 import json
 import datetime, calendar
 
-from .models import Channel
+from .models import Channel, SmartBoard
 
 def index(request):
+    boards = SmartBoard.objects.all()
     channels = Channel.objects.all()
     return render(request, "index.html",
-                  {'channels':channels} #dictionary object that is used for refference in template
+                  {'channels':channels,
+                   'boards':boards} #dictionary object that is used for refference in template
                   )
 
 def channel_page(request,channel,timeframe=None):
