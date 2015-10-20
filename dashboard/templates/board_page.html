@@ -10,31 +10,49 @@
 {% endblock header %}
 
 {% block content %}
-    <h2>Board: {{channel.board}}</h2>
+    <h2>Board: {{board.name}}</h2>
 
-    <button id="test_button" onclick="button_press()"> Switch 1 </button>
+    <table style="width:100%; border-color:blue" border="1">
+        <tr><th>Channel</th><th> Link </th></th><th>Switch</th></tr>
+        {% for channel in channels %}
+            <tr>
+                 <td> {{channel.name}} </td>
+                 <!--<td><button id="test_button" onclick="button_press()">{{status.status}}</button></td>-->
+            </tr>
+        {% endfor %}
+    </table>
 
-    <div id="chart_div" style="height:60%; width:80%; margin:auto"></div>
+    <div id="chart_div" style="height:60%; width:80%; margin:auto; background-color:lightblue"></div>
     
     <script type="text/javascript">
 
         function button_press(){
             var jsonData = $.ajax({
-              url: "{% url 'button_press' channel.id %}",
+              url: "{% url 'button_press' board.id %}",
               dataType: 'json'
             }).done(function (results) {
            document.getElementById("test_button").innerHTML = results;
         })
         }
+        
+        function button_poll() {
+            var jsonData = $.ajax({
+              url: "{% url 'get_status' channel.id %}",
+              dataType: 'json'
+            }).done(function (results) {
+            document.getElementById("test_button").innerHTML = results;
+        });
+            setTimeout(button_poll,3000);
+        }
 
         function get_new_data(){
             if (data.length > 0) {
-                address = "{% url 'channel_data' channel.id %}" + Math.ceil(data[data.length-1][0].getTime()/1000) + "/";
+                address = "{% url 'board_data' board.id %}" + Math.ceil(data[data.length-1][0].getTime()/1000) + "/";
             } else {
                 if ({{ timestart }}) {
-                    address = "{% url 'channel_data' channel.id %}" + Math.ceil(new Date().getTime()/1000 - {{ timestart }}) + "/";
+                    address = "{% url 'board_data' board.id %}" + Math.ceil(new Date().getTime()/1000 - {{ timestart }}) + "/";
                 } else {
-                    address = "{% url 'channel_data' channel.id %}";
+                    address = "{% url 'board_data' board.id %}";
                 }
                 
             }
@@ -71,11 +89,12 @@
                             {
                               drawPoints: false,
                               //valueRange: [0.0, 1.2],
-                              labels: ['Time', '{{ channel.units }}'],
+                              labels: ['Time', '{{ board.units }}'],
                               xlabel: 'Time',
-                              ylabel: '{{ channel.units }}',
+                              ylabel: '{{ board.units }}',
                             });
         
         get_new_data();
+        button_poll();
     </script>
 {% endblock content %}

@@ -49,21 +49,52 @@
     <Compile Include="SmartBoardWeb\__init__.py" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="dashboard\migrations\__pycache__\0001_initial.cpython-34.pyc" />
+    <Content Include="dashboard\migrations\__pycache__\0001_initial.cpython-35.pyc" />
+    <Content Include="dashboard\migrations\__pycache__\0002_auto_20150510_1229.cpython-34.pyc" />
+    <Content Include="dashboard\migrations\__pycache__\0002_auto_20150510_1229.cpython-35.pyc" />
+    <Content Include="dashboard\migrations\__pycache__\0003_powerreading_value.cpython-34.pyc" />
+    <Content Include="dashboard\migrations\__pycache__\0003_powerreading_value.cpython-35.pyc" />
+    <Content Include="dashboard\migrations\__pycache__\0004_auto_20150524_0020.cpython-34.pyc" />
+    <Content Include="dashboard\migrations\__pycache__\0004_auto_20150524_0020.cpython-35.pyc" />
+    <Content Include="dashboard\migrations\__pycache__\0005_auto_20150911_1326.cpython-34.pyc" />
+    <Content Include="dashboard\migrations\__pycache__\0005_auto_20150911_1326.cpython-35.pyc" />
+    <Content Include="dashboard\migrations\__pycache__\__init__.cpython-34.pyc" />
+    <Content Include="dashboard\migrations\__pycache__\__init__.cpython-35.pyc" />
+    <Content Include="dashboard\static\dashboard\css\reset.css" />
+    <Content Include="dashboard\static\dashboard\css\site.css" />
+    <Content Include="dashboard\static\dashboard\images\switchedon.png" />
     <Content Include="dashboard\static\dashboard\js\dygraph-combined.js" />
     <Content Include="dashboard\static\dashboard\js\excanvas.js" />
     <Content Include="dashboard\static\dashboard\js\jquery.min.js" />
     <Content Include="dashboard\templates\base.html" />
     <Content Include="dashboard\templates\board_page.html" />
     <Content Include="dashboard\templates\channel_page.html" />
+    <Content Include="dashboard\templates\images\son.jpg" />
     <Content Include="dashboard\templates\index.html" />
+    <Content Include="dashboard\__pycache__\admin.cpython-34.pyc" />
+    <Content Include="dashboard\__pycache__\admin.cpython-35.pyc" />
+    <Content Include="dashboard\__pycache__\models.cpython-34.pyc" />
+    <Content Include="dashboard\__pycache__\models.cpython-35.pyc" />
+    <Content Include="dashboard\__pycache__\urls.cpython-34.pyc" />
+    <Content Include="dashboard\__pycache__\urls.cpython-35.pyc" />
+    <Content Include="dashboard\__pycache__\views.cpython-34.pyc" />
+    <Content Include="dashboard\__pycache__\views.cpython-35.pyc" />
+    <Content Include="dashboard\__pycache__\__init__.cpython-34.pyc" />
+    <Content Include="dashboard\__pycache__\__init__.cpython-35.pyc" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="dashboard" />
     <Folder Include="dashboard\migrations" />
+    <Folder Include="dashboard\migrations\__pycache__\" />
     <Folder Include="dashboard\static\" />
     <Folder Include="dashboard\static\dashboard\" />
+    <Folder Include="dashboard\static\dashboard\css\" />
+    <Folder Include="dashboard\static\dashboard\images\" />
     <Folder Include="dashboard\static\dashboard\js" />
     <Folder Include="dashboard\templates" />
+    <Folder Include="dashboard\templates\images\" />
+    <Folder Include="dashboard\__pycache__\" />
     <Folder Include="nodecomms" />
     <Folder Include="nodecomms\migrations" />
     <Folder Include="SmartBoardWeb" />
