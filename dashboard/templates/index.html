@@ -1,14 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <table style="width:100%" border="1">
-        <tr><th>Board</th><th>View Data</th><th>Channel</th><th>Datapoints Captured</th></tr>
+
+    <table style="width:100%" border="5">
+        <tr><th>Board Location</th><th>Board Socket</th><th>Toggle Switch Status</th><th>Datapoints Captured</th></tr>
         {% for channel in channels %}
             <tr>
-                <td>{{ channel.name }}</td>
-                <td><a href="{% url 'channel' channel.id %}">All Points</a> - <a href="{% url 'channel' channel.id "1000points" %}">Last 1000 Points</a> - <a href="{% url 'channel' channel.id "day" %}">Last Day</a> - <a href="{% url 'channel' channel.id "hour" %}">Last Hour</a> - <a href="{% url 'channel' channel.id "5minutes" %}">Last 5 Minutes</a></td>
-                <td>{{ channel.board }}</td>
-                <td>{{ channel.points.count }}</td>
+                <td><center>{{ channel.name }}</center></td>
+                <td><center><a href="{% url 'channel' channel.id %}">Socket 1</a> - <a href="{% url 'channel' channel.id %}">Socket 2</a> - <a href="{% url 'channel' channel.id %}">Socket 3</a> - <a href="{% url 'channel' channel.id %}">Socket 4</a></center></td>
+				<td><center><a href="{% url 'channel' channel.id %}">On</a> / <a href="{% url 'channel' channel.id %}">Off</a></center>
+                <td><center>{{ channel.points.count }}</center></td>
             </tr>
         {% endfor %}
     </table>
