@@ -1,15 +1,18 @@
 <html>
     <head>
+		
+		<img src="https://scontent-lax3-1.xx.fbcdn.net/hphotos-xfp1/v/t1.0-9/12039476_1145222352158034_4453364958490349856_n.jpg?oh=d6837d438d8584bc2b2b901655ae9f72&oe=56D03218" alt="Switched On Logo" height="100" width="200">
+		
         <title>Team 5: Smart PowerBoard Demo</title>
         {% block header %}
         {% endblock header %}
     </head>
     <body>
-        <h1>Team 5: Smart PowerBoard Demo</h1>
-        <a href="{% url 'index' %}">Home</a>
-        <p>
-            Points can also be added by visiting /report/[ChannelID]/Value
-        </p>
+		
+		<body style="background-color:white">
+		<h1 style="color:green">Switched ON: Watt Watcher Interface</h1>
+		<a href="{% url 'index' %}">Home</a>
+      
         {% block content %}
         {% endblock content %}
     </body>
