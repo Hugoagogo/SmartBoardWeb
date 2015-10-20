@@ -43,7 +43,7 @@ def get_status(request,board):
 def button_press(request, channel):
     channel = get_object_or_404(Channel,pk=channel)
     status = SwitchStatus( board = channel.board,
-                status = channel.board.current_status().status ^ (1<<channel.channel_num))
+                status = channel.board.current_status().status ^ (channel.channel_num))
     print(channel.board.current_status().status)
     status.save()
 
