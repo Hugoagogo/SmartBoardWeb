@@ -17,7 +17,7 @@
         {% for channel in channels %}
             <tr>
                  <td><a href="{% url 'channel' channel.id %}">{{channel.name}}</a></td>
-                 <td><button id="test_button" onclick="button_press(1)">{{status.status}}</button></td>
+                 <td><button id="test_button" onclick="button_press({{ channel.channel_num }})">{{status.status}}</button></td>
             </tr>
         {% endfor %}
     </table>
@@ -29,7 +29,7 @@
         function button_press(num){
             var hello = "report/button/1";
             var jsonData = $.ajax({
-              url: "{% url 'button_press' 1 %}",
+              url: "{% url 'button_press' 123 %}".replace("123",num),
               dataType: 'json'
             }).done(function (results) {
            document.getElementById("test_button").innerHTML = results;
