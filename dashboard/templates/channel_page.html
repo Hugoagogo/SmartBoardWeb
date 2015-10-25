@@ -19,23 +19,31 @@
     <h2>Board: {{channel.board}}</h2>
     <h3>Channel: {{channel.channel_num}}</h3>
 
-    <button id="test_button" onclick="button_press()">button_status()</button>
+    <button id="switch" onclick="button_press({{channel.channel_num}})">hello <!--onblur="button_status({{status.status}})--></button>
 
     <div id="chart_div" style="height:60%; width:80%; margin:auto; background-color:lightblue"></div>
     
     <script type="text/javascript">
-        function button_status() {
+        function button_status(num) {
             //decode whether button is on/off
-            return(hello);
+            var i = 1;
+            document.getElementById("switch").innerHTML = num;
+            var mask = 1<<(i-1);
+            if((num & mask ) != 0) {
+                  document.getElementById("switch").innerHTML = "On";
+                  document.getElementById("switch").style.color = "Green";
+              } else {
+                  document.getElementById("switch").innerHTML = "Off";
+                  document.getElementById("switch").style.color = "Red";
+              }
         }
 
-        function button_press(){
+        function button_press(num){
             var jsonData = $.ajax({
-              url: "{% url 'button_press' channel.id %}",
+              url: "{% url 'button_press' 123 %}".replace("123",num),
               dataType: 'json'
-            }).done(function (results) {
-           document.getElementById("test_button").innerHTML = results;
-        })
+            }).done(function (results) { 
+                    button_status(results)});
         }
 
         function button_poll() {
@@ -44,8 +52,7 @@
               url: "{% url 'get_status' channel.id %}",
               dataType: 'json'
             }).done(function (results) {
-            document.getElementById("test_button").innerHTML = results;
-        });
+                    button_status(results)});
             setTimeout(button_poll,3000);
         }
 

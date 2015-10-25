@@ -3,16 +3,18 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{1cc98fe3-7470-4e69-b477-b1fd5736eb37}</ProjectGuid>
+    <ProjectGuid>{0199202f-141d-4361-b543-1debaee59498}</ProjectGuid>
     <ProjectHome />
     <StartupFile>manage.py</StartupFile>
     <SearchPath />
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <ProjectTypeGuids>{5F0BE9CA-D677-4A4D-8806-6076C0FAAD37};{349c5851-65df-11da-9384-00065b846f21};{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
-    <LaunchProvider>Django launcher</LaunchProvider>
+    <ProjectTypeGuids>{e614c764-6d9e-4607-9337-b7073809a0bd};{1b580a1a-fdb3-4b32-83e1-6407eb2722e6};{349c5851-65df-11da-9384-00065b846f21};{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>Web launcher</LaunchProvider>
     <InterpreterId />
     <InterpreterVersion />
+    <PythonDebugWebServerCommandArguments>--debug $(CommandLineArguments)</PythonDebugWebServerCommandArguments>
+    <PythonWsgiHandler>{StartupModule}.wsgi_app()</PythonWsgiHandler>
     <UseIISExpress>true</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
@@ -49,18 +51,6 @@
     <Compile Include="SmartBoardWeb\__init__.py" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="dashboard\migrations\__pycache__\0001_initial.cpython-34.pyc" />
-    <Content Include="dashboard\migrations\__pycache__\0001_initial.cpython-35.pyc" />
-    <Content Include="dashboard\migrations\__pycache__\0002_auto_20150510_1229.cpython-34.pyc" />
-    <Content Include="dashboard\migrations\__pycache__\0002_auto_20150510_1229.cpython-35.pyc" />
-    <Content Include="dashboard\migrations\__pycache__\0003_powerreading_value.cpython-34.pyc" />
-    <Content Include="dashboard\migrations\__pycache__\0003_powerreading_value.cpython-35.pyc" />
-    <Content Include="dashboard\migrations\__pycache__\0004_auto_20150524_0020.cpython-34.pyc" />
-    <Content Include="dashboard\migrations\__pycache__\0004_auto_20150524_0020.cpython-35.pyc" />
-    <Content Include="dashboard\migrations\__pycache__\0005_auto_20150911_1326.cpython-34.pyc" />
-    <Content Include="dashboard\migrations\__pycache__\0005_auto_20150911_1326.cpython-35.pyc" />
-    <Content Include="dashboard\migrations\__pycache__\__init__.cpython-34.pyc" />
-    <Content Include="dashboard\migrations\__pycache__\__init__.cpython-35.pyc" />
     <Content Include="dashboard\static\dashboard\css\reset.css" />
     <Content Include="dashboard\static\dashboard\css\site.css" />
     <Content Include="dashboard\static\dashboard\images\switchedon.png" />
@@ -72,34 +62,22 @@
     <Content Include="dashboard\templates\channel_page.html" />
     <Content Include="dashboard\templates\images\son.jpg" />
     <Content Include="dashboard\templates\index.html" />
-    <Content Include="dashboard\__pycache__\admin.cpython-34.pyc" />
-    <Content Include="dashboard\__pycache__\admin.cpython-35.pyc" />
-    <Content Include="dashboard\__pycache__\models.cpython-34.pyc" />
-    <Content Include="dashboard\__pycache__\models.cpython-35.pyc" />
-    <Content Include="dashboard\__pycache__\urls.cpython-34.pyc" />
-    <Content Include="dashboard\__pycache__\urls.cpython-35.pyc" />
-    <Content Include="dashboard\__pycache__\views.cpython-34.pyc" />
-    <Content Include="dashboard\__pycache__\views.cpython-35.pyc" />
-    <Content Include="dashboard\__pycache__\__init__.cpython-34.pyc" />
-    <Content Include="dashboard\__pycache__\__init__.cpython-35.pyc" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="dashboard" />
     <Folder Include="dashboard\migrations" />
-    <Folder Include="dashboard\migrations\__pycache__\" />
     <Folder Include="dashboard\static\" />
     <Folder Include="dashboard\static\dashboard\" />
-    <Folder Include="dashboard\static\dashboard\css\" />
-    <Folder Include="dashboard\static\dashboard\images\" />
+    <Folder Include="dashboard\static\dashboard\css" />
+    <Folder Include="dashboard\static\dashboard\images" />
     <Folder Include="dashboard\static\dashboard\js" />
     <Folder Include="dashboard\templates" />
-    <Folder Include="dashboard\templates\images\" />
-    <Folder Include="dashboard\__pycache__\" />
+    <Folder Include="dashboard\templates\images" />
     <Folder Include="nodecomms" />
     <Folder Include="nodecomms\migrations" />
     <Folder Include="SmartBoardWeb" />
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.Django.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.Web.targets" />
   <ProjectExtensions>
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
@@ -108,7 +86,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:50184/</IISUrl>
+          <IISUrl>http://localhost:51889/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

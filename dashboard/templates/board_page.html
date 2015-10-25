@@ -17,7 +17,7 @@
         {% for channel in channels %}
             <tr>
                  <td><a href="{% url 'channel' channel.id %}">{{channel.name}}</a></td>
-                 <td><button id="test_button" onclick="button_press({{ channel.channel_num }})">{{status.status}}</button></td>
+                 <td><button id={{channel.channel_num}} class="switch" onclick="button_press({{ channel.channel_num }})"onblur="(button_status({{status.status}}))"></button></td>
             </tr>
         {% endfor %}
     </table>
@@ -25,15 +25,30 @@
     <div id="chart_div" style="height:60%; width:80%; margin:auto; background-color:lightblue"></div>
     
     <script type="text/javascript">
+        function button_status(num) {
+            //decode whether button is on/off
+            var numSwitch = $('.switch').length;
+            var i=0;
+            var mask = 0;
+            for(i=1; i<=numSwitch; i++) {
+              mask = 1<<(i-1);
+              if((num & mask ) != 0) {
+                  document.getElementById(i).innerHTML = "On";
+                  document.getElementById(i).style.color = "Green";
+              } else {
+                  document.getElementById(i).innerHTML = "Off";
+                  document.getElementById(i).style.color = "Red";
+              }
+            }
+        }
 
         function button_press(num){
             var hello = "report/button/1";
             var jsonData = $.ajax({
               url: "{% url 'button_press' 123 %}".replace("123",num),
               dataType: 'json'
-            }).done(function (results) {
-           document.getElementById("test_button").innerHTML = results;
-        })
+            }).done(function (results) { 
+                    button_status(results)});
         }
         
         function button_poll() {
@@ -41,8 +56,7 @@
               url: "{% url 'get_status' board.id %}",
               dataType: 'json'
             }).done(function (results) {
-            document.getElementById("test_button").innerHTML = results;
-        });
+                    button_status(results)});
             setTimeout(button_poll,3000);
         }
 
