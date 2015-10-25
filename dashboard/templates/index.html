@@ -1,8 +1,30 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <div style="height:91%">
+        <div1 style="float:left; width:50%;">
+            <center>
+                <!-- put board list here-->
+                <table style="width:100%; border-color:blue" border="1">
+                    <tr><th>Board</th><th> Link </th></th><th>Watts/Hour</th></tr>
+                    {% for board in boards %}
+                        <tr>
+                            <td>{{ board.name }}</td>
+                            <td><a href="{% url 'board' board.id %}">All Points</a></td>
+                            <td> current power usage for board</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </center>
+        </div1>
+
+        <div2 style="float:right; width:50%;">
+            <center></center>
+        </div2>
+    </div>
+
     <table style="width:100%" border="1">
-        <tr><th>Board</th><th>View Data</th><th>Channel</th><th>Datapoints Captured</th></tr>
+        <tr><th>Channel</th><th>View Data</th><th>Board</th><th>Datapoints Captured</th></tr>
         {% for channel in channels %}
             <tr>
                 <td>{{ channel.name }}</td>
@@ -12,7 +34,8 @@
             </tr>
         {% endfor %}
     </table>
-    <p>
-        <a href="{% url 'admin:index' %}">Admin</a>
-    </p>
+
+    <script type="text/javascript">
+
+    </script>
 {% endblock content %}

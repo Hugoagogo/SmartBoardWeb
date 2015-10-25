@@ -1,5 +1,5 @@
-from django.shortcuts import render, get_object_or_404
-from dashboard.models import Channel, PowerReading, SmartBoard
+﻿from django.shortcuts import render, get_object_or_404
+from dashboard.models import Channel, PowerReading, SmartBoard, SwitchStatus
 from django.http import HttpResponse, HttpResponseRedirect
 
 import datetime
@@ -36,6 +36,15 @@ def add_random(request,channel):
 	
 def get_status(request,board):
 	board = get_object_or_404(SmartBoard, pk=board)
-	status = board.status.filter(datetime__lt=datetime.datetime.now()).order_by("datetime").first()
+	status = board.current_status()
 	
 	return HttpResponse(status.status)
+
+def button_press(request, channel):
+    channel = get_object_or_404(Channel,pk=channel)
+    status = SwitchStatus( board = channel.board,
+                status = channel.board.current_status().status ^ (channel.channel_num))
+    print(channel.board.current_status().status)
+    status.save()
+
+    return HttpResponse(status.status)
