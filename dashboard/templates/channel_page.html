@@ -17,16 +17,16 @@
     <h4>Channel num: {{channel.channel_num}}</h4>
     -->
     <h2>Board: {{channel.board}}</h2>
-    <h3>Channel: {{channel.channel_num}}</h3>
+    <h3>Channel: {{channel.id}}</h3>
 
-    <button id="switch" onclick="button_press({{channel.channel_num}})">hello <!--onblur="button_status({{status.status}})--></button>
+    <button id="switch" onclick="button_press({{channel.channel_num}})" onblur="button_status({{status.status}})"> </button>
 
     <div id="chart_div" style="height:60%; width:80%; margin:auto; background-color:lightblue"></div>
     
     <script type="text/javascript">
         function button_status(num) {
             //decode whether button is on/off
-            var i = {{channel.channel_num}};
+            var i = {{channel.id}};
             document.getElementById("switch").innerHTML = num;
             var mask = 1<<(i-1);
             if((num & mask ) != 0) {
