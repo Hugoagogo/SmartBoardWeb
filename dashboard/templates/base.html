@@ -2,7 +2,7 @@
 
 <html>
     <head>
-        <title>Team 5: Smart PowerBoard Demo</title>
+        <title>Watt Watch</title>
         <link rel="stylesheet" href="{% static "dashboard/css/reset.css" %}" />
 		<link rel="stylesheet" href="{% static "dashboard/css/site.css" %}" />
         {% block header %}
@@ -10,17 +10,17 @@
     </head>
     <body>
         <div id="header">
-            <img src="{% static "dashboard/images/switchedon.png" %}" alt="Switched On Logo" height="100px" />
-            <h1>Team 5: Smart PowerBoard Demo</h1>
+            <p> <a href="{% url 'index' %}">
+                <img src="{% static "dashboard/images/WattWatch.png" %}" alt="Switched On Logo" height="20%" /></a>
+            </p>
         </div>
-        
+        <!--
         <div id="nav">
             <ul>
                 <li><a href="{% url 'index' %}">Home</a></li>
-                <li><a href="{% url 'index' %}">Other Link</a></li>
-                <li><a href="{% url 'index' %}">Other Other Link</a></li>
             </ul>
         </div>
+        -->
         
         <div id="main">
             {% block content %}
