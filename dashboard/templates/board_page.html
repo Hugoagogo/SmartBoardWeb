@@ -26,7 +26,7 @@
                 {% for channel in channels %}
                 <tr style="height:50">
                     <td style="font-size:18;"><a href="{% url 'channel' channel.id %}" style="color:green">{{channel.name}}</a></td>
-                    <td><button id="button_{{channel.channel_num}}" class="switch" onclick="button_press({{ channel.id }})" onblur="(button_status({{status.status}}))"></button></td>
+                    <td><button id="button_{{channel.channel_num}}" class="switch" onclick="button_press({{ channel.channel_num }})" onblur="(button_status({{status.status}}))"></button></td>
                 </tr>
                 {% endfor %}
             </table>
