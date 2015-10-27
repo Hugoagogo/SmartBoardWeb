@@ -48,3 +48,17 @@ def button_press(request, channel):
     status.save()
 
     return HttpResponse(status.status)
+
+def add_board(request, id, numchannels):
+    numchannels = int(numchannels)
+    smartboard, created_new = SmartBoard.objects.get_or_create(id = id)
+    if(created_new):
+        smartboard.name = "Board: "+id
+        smartboard.save()
+        for x in range(1, numchannels+1):
+            channel = Channel(name = "Channel: "+str(x),
+                              channel_num = x,
+                              board = smartboard)
+            channel.save()
+
+    return HttpResponse(numchannels)

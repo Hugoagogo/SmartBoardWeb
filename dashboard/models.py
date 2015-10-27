@@ -21,7 +21,7 @@ class Channel(models.Model):
     board = models.ForeignKey(SmartBoard,related_name = "channels")
     channel_num = models.IntegerField()
     name = models.CharField(max_length=50)
-    units = models.CharField(max_length=50,default="Power")
+    units = models.CharField(max_length=50,default="Watts")
 
     def __str__(self):
         return self.name

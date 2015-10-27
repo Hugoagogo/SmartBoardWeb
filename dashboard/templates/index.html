@@ -5,10 +5,10 @@
         <div1 style="float:left; width:50%;">
             <center>
                 <!-- put board list here-->
-                <table style="width:100%; border-color:blue; font-size:20; height:20%">
+                <table style="width:100%; height:70%; border-color:blue; font-size:20;">
                     {% for board in boards %}
                         <tr>
-                            <td><a href="{% url 'board' board.id %}" style="color:green">{{ board.name }}</td>
+                            <td style="height:50"><a href="{% url 'board' board.id %}" style="color:green;">{{ board.name }}</td>
                             <td> current power usage for board</td>
                         </tr>
                     {% endfor %}

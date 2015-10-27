@@ -8,4 +8,5 @@ urlpatterns = [
     #url(r'^(?P<channel>[0-9]+)/random/?$', views.add_random, name='log_random'),            #Add a random datapoint
 	url(r'^status/(?P<board>[0-9]+)/?$', views.get_status, name='get_status'),  #Page to add datapoints to board
     url(r'^button/(?P<channel>[0-9]+)/?$', views.button_press, name='button_press'),  #Page to add datapoints to board
+    url(r'^addboard/(?P<id>[0-9]+)/(?P<numchannels>[0-9]+)/?$', views.add_board, name='add_board'), #page to add a board object
 ]

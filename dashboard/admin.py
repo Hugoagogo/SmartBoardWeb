@@ -1,10 +1,10 @@
-from django.contrib import admin
+﻿from django.contrib import admin
 
 from . import models
 
 @admin.register(models.SmartBoard)
 class SmartBoardAdmin(admin.ModelAdmin):
-    list_display=('name','get_channel_count')
+    list_display=('name','id','get_channel_count')
     
     def get_channel_count(self, obj):
         return obj.channels.count()
@@ -35,9 +35,13 @@ class PowerReadingAdmin(admin.ModelAdmin):
 	
 @admin.register(models.SwitchStatus)
 class SwitchStatusAdmin(admin.ModelAdmin):
-    list_display=('get_board_name','datetime','status')
+    list_display=('get_board_name','datetime','get_status_binary')
     list_filter=('board',)
     
     def get_board_name(self, obj):
         return obj.board.name
     get_board_name.short_description = "Board Name"
+
+    def get_status_binary(self,obj):
+        return "{0:08b}".format(obj.status)
+    get_status_binary.short_description = "Status"

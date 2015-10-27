@@ -51,14 +51,14 @@
   <ItemGroup>
     <Content Include="dashboard\static\dashboard\css\reset.css" />
     <Content Include="dashboard\static\dashboard\css\site.css" />
-    <Content Include="dashboard\static\dashboard\images\switchedon.png" />
+    <Content Include="dashboard\static\dashboard\images\SwitchedOn.png" />
+    <Content Include="dashboard\static\dashboard\images\WattWatch.png" />
     <Content Include="dashboard\static\dashboard\js\dygraph-combined.js" />
     <Content Include="dashboard\static\dashboard\js\excanvas.js" />
     <Content Include="dashboard\static\dashboard\js\jquery.min.js" />
     <Content Include="dashboard\templates\base.html" />
     <Content Include="dashboard\templates\board_page.html" />
     <Content Include="dashboard\templates\channel_page.html" />
-    <Content Include="dashboard\templates\images\son.jpg" />
     <Content Include="dashboard\templates\index.html" />
   </ItemGroup>
   <ItemGroup>
@@ -70,7 +70,6 @@
     <Folder Include="dashboard\static\dashboard\images" />
     <Folder Include="dashboard\static\dashboard\js" />
     <Folder Include="dashboard\templates" />
-    <Folder Include="dashboard\templates\images" />
     <Folder Include="nodecomms" />
     <Folder Include="nodecomms\migrations" />
     <Folder Include="SmartBoardWeb" />

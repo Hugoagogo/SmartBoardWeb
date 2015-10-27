@@ -26,30 +26,31 @@
                 {% for channel in channels %}
                 <tr style="height:50">
                     <td style="font-size:18;"><a href="{% url 'channel' channel.id %}" style="color:green">{{channel.name}}</a></td>
-                    <td><button id={{channel.id}} class="switch" onclick="button_press({{ channel.channel_num }})" onblur="(button_status({{status.status}}))"></button></td>
+                    <td><button id="button_{{channel.channel_num}}" class="switch" onclick="button_press({{ channel.id }})" onblur="(button_status({{status.status}}))"></button></td>
                 </tr>
                 {% endfor %}
             </table>
         </div1>
         <div2 style="float:right; width:80%;">
-            <div id="chart_div" style="height:70%; margin:auto; background-color:lightblue"></div>
+            <div id="chart_div" style="height:70%; margin:auto;"></div>
         </div2>
     </div>
 
     <script type="text/javascript">
         function button_status(num) {
             //decode whether button is on/off
-            var numSwitch = $('.switch').length;
+            //var numSwitch = $('.switch').length;
             var i=0;
             var mask = 0;
-            for(i=1; i<=numSwitch; i++) {
-              mask = 1<<(i-1);
+            for(i=0; i<channel_nums.length; i++) {
+              var btn_id = "button_"+channel_nums[i];
+              mask = 1<<(i);
               if((num & mask ) != 0) {
-                  document.getElementById(i).innerHTML = "On";
-                  document.getElementById(i).style.color = "Green";
+                  document.getElementById(btn_id).innerHTML = "On";
+                  document.getElementById(btn_id).style.color = "Green";
               } else {
-                  document.getElementById(i).innerHTML = "Off";
-                  document.getElementById(i).style.color = "Red";
+                  document.getElementById(btn_id).innerHTML = "Off";
+                  document.getElementById(btn_id).style.color = "Red";
               }
             }
         }
@@ -120,6 +121,12 @@
                               ylabel: 'Watts',
                             });
         
+        var channel_nums = [
+        {% for channel in channels %}
+        {{ channel.channel_num }},
+        {% endfor %}
+        ]
+
         get_new_data();
         button_poll();
     </script>

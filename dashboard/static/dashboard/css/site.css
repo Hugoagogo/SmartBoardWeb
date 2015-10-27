@@ -52,10 +52,12 @@ body {
     padding-right: 15px;
     background-color: #ffffff;
     border-radius: 5px 5px 5px 5px;
+    overflow: hidden;
 }
 
 #chart_div {
     border-radius: 5px 5px 5px 5px;
+    background-color: #F4F4F4;
 }
 
 #chart_link, #tabled {
