@@ -19,7 +19,7 @@ def log_board_data(request,board,data):
     for num, channel in enumerate(board.channels.order_by("channel_num")):
         pt = PowerReading(channel=channel, value=data[num])
         pt.save()
-    return HttpResponse("OK")
+    return HttpResponse(str(board.current_status().status))
 
 def clear_channel(request,channel):
     channel = get_object_or_404(Channel,pk=channel)
