@@ -26,17 +26,32 @@
                 {% for channel in channels %}
                 <tr style="height:50">
                     <td style="font-size:18;"><a href="{% url 'channel' channel.id %}" style="color:green">{{channel.name}}</a></td>
-                    <td><button id="button_{{channel.channel_num}}" class="switch" onclick="button_press({{ channel.channel_num }})" onblur="(button_status({{status.status}}))"></button></td>
+                    <td><button id="button_{{channel.channel_num}}" class="switch" onclick="button_press({{ channel.id }})" onblur="(button_status({{status.status}}))"></button></td>
                 </tr>
                 {% endfor %}
             </table>
         </div1>
         <div2 style="float:right; width:80%;">
             <div id="chart_div" style="height:70%; margin:auto;"></div>
+            <b><form name="opt"> Board Average
+                <input id="normal" type="checkbox" onclick="update_visible()" checked/><span></span>
+            </form></b>
+            <form name="opt"> Channels:
+                {% for channel in channels %}
+                    <input type="checkbox" name="hello" onclick="get_new_data();" checked/><span>{{channel.name}}</span>
+                {% endfor %}
+            </form>
         </div2>
     </div>
 
     <script type="text/javascript">
+        var g;
+
+        function update_visible() {
+            var x = document.getElementById('normal');
+            g.setVisibility(0, x.checked);
+        }
+
         function button_status(num) {
             //decode whether button is on/off
             //var numSwitch = $('.switch').length;
@@ -112,13 +127,16 @@
         
         var data = [];
         
-        var g = new Dygraph(document.getElementById("chart_div"), data,
+        var beta = [document.getElementById('normal').checked];
+        
+        g = new Dygraph(document.getElementById("chart_div"), data,
                             {
                               drawPoints: false,
                               //valueRange: [0.0, 1.2],
                               labels: ['Time', '{{ board.units }}'],
                               xlabel: 'Time',
                               ylabel: 'Watts',
+                              colorValue: 0.8,
                             });
         
         var channel_nums = [
