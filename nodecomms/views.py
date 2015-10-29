@@ -19,7 +19,7 @@ def log_board_data(request,board,data):
     for num, channel in enumerate(board.channels.order_by("channel_num")):
         pt = PowerReading(channel=channel, value=data[num])
         pt.save()
-    return HttpResponse(str(board.current_status().status))
+    return HttpResponse(str(board.current_status().status)+"\r\n")
 
 def clear_channel(request,channel):
     channel = get_object_or_404(Channel,pk=channel)
@@ -45,6 +45,14 @@ def button_press(request, channel):
     status = SwitchStatus( board = channel.board,
                 status = channel.board.current_status().status ^ (1<<(channel.channel_num-1)) )
     print(channel.board.current_status().status)
+    status.save()
+
+    return HttpResponse(status.status)
+
+def button_press_anon(request, board,channel_num):
+    board = get_object_or_404(SmartBoard,pk=board)
+    status = SwitchStatus( board = board,
+                status = board.current_status().status ^ (1<<(int(channel_num)-1)) )
     status.save()
 
     return HttpResponse(status.status)
