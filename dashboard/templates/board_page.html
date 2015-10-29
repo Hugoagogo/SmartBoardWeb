@@ -140,11 +140,12 @@
                             {
                               drawPoints: false,
                               //valueRange: [0.0, 1.2],
-                              labels: ['Time', {% for channel in channels %}'{{ channel.units }}',{% endfor %}],
+                              labels: ['Time', {% for channel in channels %}'{{ channel.name }}',{% endfor %}],
                               xlabel: 'Time',
                               ylabel: 'Watts',
                               //colorValue: 0.8,
                               connectSeparatedPoints: true,
+                              legend: 'always',
                             });
         
         var channel_nums = [
