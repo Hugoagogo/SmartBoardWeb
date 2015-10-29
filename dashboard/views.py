@@ -64,7 +64,7 @@ def channel_data(request,channel,timestamp=None):
     if timestamp != None:
         dtime = datetime.datetime.utcfromtimestamp(int(timestamp)+1) #+1 to allow for fractional seconds stored in db
         dtime = dtime.replace(tzinfo=timezone.utc)
-        readings = readings.filter(channel=channel,datetime__gte=dtime)
+        readings = readings.filter(datetime__gte=dtime)
     
     readings = readings.values_list("datetime","value")
     
@@ -79,25 +79,29 @@ def channel_data(request,channel,timestamp=None):
     return HttpResponse(json.dumps(list(data)))
 
 def board_data(request,board,timestamp=None):
-    board = get_object_or_404(Channel,pk=channel)
-    readings = board.points.all().order_by("datetime")
+    board = get_object_or_404(SmartBoard,pk=board)
+    readings = [channel.points.all().order_by("datetime") for channel in board.channels.all()]
+    
     
     if timestamp != None:
         dtime = datetime.datetime.utcfromtimestamp(int(timestamp)+1) #+1 to allow for fractional seconds stored in db
         dtime = dtime.replace(tzinfo=timezone.utc)
-        readings = readings.filter(channel=channel,datetime__gte=dtime)
-    
-    readings = readings.values_list("datetime","value")
+        readings = [channel.filter(datetime__gte=dtime) for channel in readings]
     
     # Convert the readings into something simpler than a query set
     # Note the use of iterator() and round braces around the expression so it is a generator (lazy evaluation)
-    data = ((int(calendar.timegm(dt.timetuple())),v) for dt, v in readings.iterator())
     
-    # if we have too many values cut them down to once every 20 seconds max (temprary fix to not being able to display all data on website)
-    if readings.count() > 20000:
-        data = average_readings(data,20)
+    readings = [((int(calendar.timegm(dt.timetuple())),v) for dt, v in channel.values_list("datetime","value").iterator()) for channel in readings]
     
-    return HttpResponse(json.dumps(list(data)))
+    simlified = squish_readings(readings);
+    
+    #Dont worry about this for now we wont have that much data
+    #for index in range(len(readings)):
+    #    # if we have too many values cut them down to once every 20 seconds max (temprary fix to not being able to display all data on website)
+    #    if readings[index].count() > 20000:
+    #        readings[index] = average_readings(readings[index],20)
+    
+    return HttpResponse(json.dumps(list(simlified)))
 
 def average_readings(data,period):#Average points spaced more closely than period, done with a nice generator function (lazy evaluation)
     last = 0
@@ -115,3 +119,12 @@ def average_readings(data,period):#Average points spaced more closely than perio
             total_x += timestamp
             total_y += value
             count += 1
+            
+def squish_readings(readings):
+    line = [next(c,None) for c in readings] # Use line to store all of the oldest value in each channel
+    while any(i!=None for i in line): # keep going till we run out of points
+        t = min(i[0] for i in line if i is not None) # get our smallest time
+        yield [t] + [i[1] if i != None and i[0] == t else None for i in line] # return a line with only values from the smallest time
+        line = [i if i == None or i[0] != t else next(c,None) for i, c in zip(line, readings)] # bump the values we just sent out of line so we dont sent them again
+
+    

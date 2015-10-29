@@ -25,7 +25,7 @@
                 <tr><th style="width:70%"></th></tr>
                 {% for channel in channels %}
                 <tr>
-                    <td style="font-size:18;"><a href="{% url 'channel' channel.id %}" style="color:green">{{channel.name}}</a></td>
+                    <td style="font-size:18; vertical-align:middle;"><a href="{% url 'channel' channel.id %}" style="color:green">{{channel.name}}</a></td>
                     <td class="onoffswitch">
                         <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="button_{{channel.channel_num}}" />
                         <label class="onoffswitch-label" for="myonoffswitch" onclick="button_press({{ channel.id }})">
@@ -66,7 +66,7 @@
             var mask = 0;
             for(i=0; i<channel_nums.length; i++) {
               var btn_id = "button_"+channel_nums[i];
-              mask = 1<<(i);
+              mask = 1<<(channel_nums[i]-1);
               if((num & mask ) != 0) {
                   document.getElementById(btn_id).checked = true;
               } else {
@@ -102,49 +102,15 @@
                     address = "{% url 'board_data' board.id %}";
                 } 
             }
-            
-            if (data.length > 0) {
-                add[1] = "{% url 'channel_data' 1 %}" + Math.ceil(data[data.length-1][0].getTime()/1000) + "/";
-            } else {
-                if ({{ timestart }}) {
-                    add[1] = "{% url 'channel_data' 1 %}" + Math.ceil(new Date().getTime()/1000 - {{ timestart }}) + "/";
-                } else {
-                    add[1] = "{% url 'channel_data' 1 %}";
-                }   
-            }
 
             var jsonData = $.ajax({
               url: address,
               dataType: 'json'
             }).done(function (results) {
                 for (var i = 0; i < results.length; i++){
-                    data.push([new Date(results[i][0]*1000),results[i][1]]);
-                }
-                var needs_update = false;
-                if (results.length) {
-                    $('#latest-point').html(data[data.length-1][0]);
-                    $('#latest-point').fadeTo(0, 0.25).fadeTo(1500, 1.0);
-                    var needs_update = true;
-                }
-                if ({{ timestart }}) {
-                    var d = new Date().getTime();
-                    while (data.length && ((d-data[0][0].getTime())/1000 > {{ timestart }})) {
-                        data.splice(0,1);
-                        needs_update = true;
-                    }
-                }
-                if (needs_update) {
-                    g.updateOptions( { 'file': data } );
-                }
-                setTimeout(get_new_data,1000);
-            })
-
-            var jsonData = $.ajax({
-              url: add[1],
-              dataType: 'json'
-            }).done(function (results) {
-                for (var i = 0; i < results.length; i++){
-                    data.push([new Date(results[i][0]*1000),results[i][1]]);
+                    var line = results[i];
+                    line[0] = new Date(line[0]*1000);
+                    data.push(line);
                 }
                 var needs_update = false;
                 if (results.length) {
@@ -174,10 +140,11 @@
                             {
                               drawPoints: false,
                               //valueRange: [0.0, 1.2],
-                              labels: ['Time', '{{ board.units }}'],
+                              labels: ['Time', {% for channel in channels %}'{{ channel.units }}',{% endfor %}],
                               xlabel: 'Time',
                               ylabel: 'Watts',
-                              colorValue: 0.8,
+                              //colorValue: 0.8,
+                              connectSeparatedPoints: true,
                             });
         
         var channel_nums = [

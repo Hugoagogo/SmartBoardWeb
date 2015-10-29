@@ -22,7 +22,7 @@
             <h2 style="height:10%; font-size:30; color:blue; text-decoration: underline;"><a href="{% url 'board' channel.board.id %}" style="color:blue">{{channel.board}}</a></h2>
             
             <table><tr><th style="width:65%;"></th></tr>
-                <td style="font-size:19; color:green">{{channel.name}}</td>
+                <td style="font-size:19; color:green; vertical-align:middle;">{{channel.name}}</td>
                 <td class="onoffswitch">
                         <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch" />
                         <label class="onoffswitch-label" for="myonoffswitch" onclick="button_press({{ channel.id }})">
