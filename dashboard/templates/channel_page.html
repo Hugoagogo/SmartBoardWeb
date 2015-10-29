@@ -23,7 +23,7 @@
             
             <table><tr><th style="width:85%;"></th></tr>
                 <td style="font-size:18; color:green">{{channel.name}}</td>
-                <td><button id="switch" onclick="button_press({{channel.channel_num}})" onblur="button_status({{status.status}})"> </button></td>
+                <td><button id="switch" onclick="button_press({{channel.id}})" onblur="button_status({{status.status}})"> </button></td>
             </table>
             
         </div1>
@@ -36,7 +36,7 @@
     <script type="text/javascript">
         function button_status(num) {
             //decode whether button is on/off
-            var i = {{channel.id}};
+            var i = {{channel.channel_num}};
             document.getElementById("switch").innerHTML = num;
             var mask = 1<<(i-1);
             if((num & mask ) != 0) {
