@@ -21,9 +21,15 @@
         <div1 style="float:left; width:15%;">
             <h2 style="height:10%; font-size:30; color:blue; text-decoration: underline;"><a href="{% url 'board' channel.board.id %}" style="color:blue">{{channel.board}}</a></h2>
             
-            <table><tr><th style="width:85%;"></th></tr>
-                <td style="font-size:18; color:green">{{channel.name}}</td>
-                <td><button id="switch" onclick="button_press({{channel.id}})" onblur="button_status({{status.status}})"> </button></td>
+            <table><tr><th style="width:65%;"></th></tr>
+                <td style="font-size:19; color:green">{{channel.name}}</td>
+                <td class="onoffswitch">
+                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="switch" />
+                        <label class="onoffswitch-label" for="myonoffswitch" onclick="button_press({{ channel.id }})">
+                            <span class="onoffswitch-inner"></span>
+                            <span class="onoffswitch-switch"></span>
+                        </label>
+                </td>
             </table>
             
         </div1>
@@ -40,11 +46,9 @@
             document.getElementById("switch").innerHTML = num;
             var mask = 1<<(i-1);
             if((num & mask ) != 0) {
-                  document.getElementById("switch").innerHTML = "On";
-                  document.getElementById("switch").style.color = "Green";
+                  document.getElementById("switch").checked = true;
               } else {
-                  document.getElementById("switch").innerHTML = "Off";
-                  document.getElementById("switch").style.color = "Red";
+                  document.getElementById("switch").checked = false;
               }
         }
 

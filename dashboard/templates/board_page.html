@@ -20,13 +20,20 @@
     <div style="height:74%">
         <div1 style="float:left; width:20%;">
             <h2 style="height:10%; font-size:30; color:blue; text-decoration: underline;">{{board.name}}</h2>
-            
+
             <table>
-                <tr><th style="width:90%;"></th></tr>
+                <tr><th style="width:70%"></th></tr>
                 {% for channel in channels %}
-                <tr style="height:50">
+                <tr>
                     <td style="font-size:18;"><a href="{% url 'channel' channel.id %}" style="color:green">{{channel.name}}</a></td>
-                    <td><button id="button_{{channel.channel_num}}" class="switch" onclick="button_press({{ channel.id }})" onblur="(button_status({{status.status}}))"></button></td>
+                    <td class="onoffswitch">
+                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="button_{{channel.channel_num}}" />
+                        <label class="onoffswitch-label" for="myonoffswitch" onclick="button_press({{ channel.id }})">
+                            <span class="onoffswitch-inner"></span>
+                            <span class="onoffswitch-switch"></span>
+                        </label>
+                    </td>
+                    <!--<td><button id="button_{{channel.channel_num}}" class="switch" onclick="button_press({{ channel.id }})" onblur="(button_status({{status.status}}))"></button></td>-->
                 </tr>
                 {% endfor %}
             </table>
@@ -38,7 +45,7 @@
             </form></b>
             <form name="opt"> Channels:
                 {% for channel in channels %}
-                    <input type="checkbox" name="hello" onclick="get_new_data();" checked/><span>{{channel.name}}</span>
+                    <input type="checkbox" name="hello" onclick="get_new_data()" checked/><span>{{channel.name}}</span>
                 {% endfor %}
             </form>
         </div2>
@@ -55,18 +62,15 @@
 
         function button_status(num) {
             //decode whether button is on/off
-            //var numSwitch = $('.switch').length;
             var i=0;
             var mask = 0;
             for(i=0; i<channel_nums.length; i++) {
               var btn_id = "button_"+channel_nums[i];
               mask = 1<<(i);
               if((num & mask ) != 0) {
-                  document.getElementById(btn_id).innerHTML = "On";
-                  document.getElementById(btn_id).style.color = "Green";
+                  document.getElementById(btn_id).checked = true;
               } else {
-                  document.getElementById(btn_id).innerHTML = "Off";
-                  document.getElementById(btn_id).style.color = "Red";
+                  document.getElementById(btn_id).checked = false;
               }
             }
         }
