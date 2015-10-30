@@ -38,16 +38,9 @@
                 {% endfor %}
             </table>
         </div1>
+
         <div2 style="float:right; width:80%;">
-            <div id="chart_div" style="height:70%; margin:auto;"></div>
-            <b><form name="opt"> Board Average
-                <input id="normal" type="checkbox" onclick="update_visible()" checked/><span></span>
-            </form></b>
-            <form name="opt"> Channels:
-                {% for channel in channels %}
-                    <input type="checkbox" name="hello" onclick="get_new_data()" checked/><span>{{channel.name}}</span>
-                {% endfor %}
-            </form>
+            <div id="chart_div" style="height:70%; margin:auto;">
         </div2>
     </div>
 
@@ -133,8 +126,6 @@
         }
         
         var data = [];
-        
-        var beta = [document.getElementById('normal').checked];
         
         g = new Dygraph(document.getElementById("chart_div"), data,
                             {
